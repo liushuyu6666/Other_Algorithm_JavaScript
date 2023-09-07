@@ -1,0 +1,8 @@
+{
+  "name": "Other_Algorithm_JavaScript",
+  "version": "1.0.0",
+  "description": "This project is used to record some common algorithms that are not found in online algorithm assessments.",
+  "main": "index.js",
+  "author": "Shuyu Liu",
+  "license": "MIT"
+}
