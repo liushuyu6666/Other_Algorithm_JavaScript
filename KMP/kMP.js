@@ -27,7 +27,7 @@ export function getNextArray(pattern) {
         j = 1;
     while (j < pattern.length) {
         if (pattern.charAt(i) === pattern.charAt(j)) {
-            next.push(next[j - 1] + 1);
+            next.push(i + 1);
             i++;
             j++;
         } else {
@@ -38,10 +38,11 @@ export function getNextArray(pattern) {
                 next.push(next[i - 1] + 1);
                 i++;
                 j++;
-            } else {
+            } else if (i === 0) {
                 next.push(0);
-                i = 0;
                 j++;
+            } else {
+                i = 0;
             }
         }
     }
