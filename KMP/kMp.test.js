@@ -1,6 +1,8 @@
 import { generateRandomString } from '../utils/generateRandomString';
+import { getAllMatches } from '../utils/getAllMatches';
 import { getRandomNumberBetween } from '../utils/getRandomNumberBetween';
-import kMP, { getNextArray } from './kMP';
+import insertMIntoString from '../utils/insertIntoString';
+import kMP, { getNextArray, kMPs } from './kMP';
 
 describe('getNextArray', () => {
     it('When the prefix-like substring is abcabt.', () => {
@@ -68,5 +70,44 @@ describe('KMP', () => {
                 expect(kMP(string, pattern)).toBe(string.indexOf(pattern));
             }
         }
+    });
+});
+
+describe('KMPs', () => {
+    it('Pattern should have multiple matches.', () => {
+        for (let len = 10; len < 200; len++) {
+            for (let t = 0; t < 100; t++) {
+                const string = generateRandomString(len);
+                const patternLen = getRandomNumberBetween(1, len);
+                const pattern = generateRandomString(patternLen);
+                const indexes = new Array(Math.floor(len / 5))
+                    .fill()
+                    .map(() => getRandomNumberBetween(0, len))
+                    .sort((a, b) => a - b);
+
+                let [finalStr, finalIdx] = insertMIntoString(
+                    string,
+                    pattern,
+                    indexes,
+                );
+                const received = kMPs(finalStr, pattern);
+                const expected = getAllMatches(finalStr, pattern);
+
+                expect(received).toEqual(expected);
+            }
+        }
+        // const string = 'abcdkllnaegljk';
+        // const pattern = 'ufo';
+        // const indexes = [3, 8];
+        // const [finalStr, finalIndexes] = insertMIntoString(
+        //     string,
+        //     pattern,
+        //     indexes,
+        // );
+        // console.log(finalStr);
+        // console.log(finalIndexes);
+
+        // const received = kMPs(finalStr, pattern);
+        // console.log(received);
     });
 });

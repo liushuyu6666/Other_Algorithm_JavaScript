@@ -1,8 +1,8 @@
 export default function kMP(string, pattern) {
     const next = getNextArray(pattern);
 
-    let i = 0,
-        j = 0;
+    let i = 0, // for string
+        j = 0; // for pattern
     while (i < string.length && j < pattern.length) {
         if (string.charAt(i) === pattern.charAt(j)) {
             i++;
@@ -18,6 +18,34 @@ export default function kMP(string, pattern) {
     } else {
         return -1;
     }
+}
+
+export function kMPs(string, pattern) {
+    const next = getNextArray(pattern);
+
+    let i = 0, // for string
+        j = 0, // for pattern
+        ans = [];
+    while (i < string.length) {
+        if (j < pattern.length) {
+            if (string.charAt(i) === pattern.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                if (j === 0) i++;
+                else j = next[j - 1];
+            }
+        } else {
+            // j reaches the end of the pattern
+            ans.push(i - j);
+            j = next[j - 1];
+        }
+    }
+    if (j === pattern.length) {
+        ans.push(i - j);
+    }
+
+    return ans;
 }
 
 export function getNextArray(pattern) {
